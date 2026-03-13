@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Home } from "./home"
-import { gameRecord, RecordsService } from "./home.service";
+import { Leaderboards } from "./leaderboards"
+import { gameRecord, RecordsService } from "./leaderboards.service";
 import { of, throwError } from "rxjs";
 import { FormsModule } from "@angular/forms";
 import { vi, Mocked } from "vitest";
 import { HttpClientModule } from "@angular/common/http";
 
-describe('Home Component', () => {
-    let component: Home
-    let fixture: ComponentFixture<Home>
+describe('Leaderboards Component', () => {
+    let component: Leaderboards
+    let fixture: ComponentFixture<Leaderboards>
     let mockService: Partial<Mocked<RecordsService>>;
 
     beforeEach(async () => {
@@ -20,11 +20,11 @@ describe('Home Component', () => {
 
 
         await TestBed.configureTestingModule({
-            imports: [Home, FormsModule, HttpClientModule],
+            imports: [Leaderboards, FormsModule, HttpClientModule],
             providers: [{ provide: RecordsService, useValue: mockService }]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(Home);
+        fixture = TestBed.createComponent(Leaderboards);
         component = fixture.componentInstance;
     });
 

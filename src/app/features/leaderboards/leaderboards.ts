@@ -2,16 +2,16 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { RecordsService, User, gameRecord } from "./home.service";
+import { RecordsService, User, gameRecord } from "./leaderboards.service";
 
 @Component({
-    selector: "app-home",
+    selector: "app-leaderboards",
     imports: [CommonModule, FormsModule, HttpClientModule],
-    templateUrl: "./home.html",
-    styleUrl: "./home.css"
+    templateUrl: "./leaderboards.html",
+    styleUrl: "./leaderboards.css"
 })
 
-export class Home implements OnInit {
+export class Leaderboards implements OnInit {
     game: string | null = null;
     selectedGame: any = null;
     record: gameRecord[] = [];

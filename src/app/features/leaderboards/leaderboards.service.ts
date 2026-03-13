@@ -43,7 +43,7 @@ export class RecordsService {
 })
 
 export class UsersService {
-    private url = "http://127.0.0.1:5000/api"
+    private url = "https://mathandbeerjs-production.up.railway.app/api"
 
     constructor(private http: HttpClient) { }
 
