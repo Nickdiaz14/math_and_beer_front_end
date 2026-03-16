@@ -7,8 +7,8 @@ import { HomeService, Event } from "./home.service";
 @Component({
     selector: "app-Home",
     imports: [CommonModule, FormsModule, HttpClientModule],
-    templateUrl: "./Home.html",
-    styleUrl: "./Home.css"
+    templateUrl: "./home.html",
+    styleUrl: "./home.css"
 })
 
 export class Home implements OnInit {
