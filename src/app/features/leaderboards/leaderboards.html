@@ -1,6 +1,4 @@
-<!-- <div id="countdown-overlay">
-            <h2 class="fs-3">Próximamente disponible 🚧 <br>¡Vuelve pronto!</h2>
-        </div> -->
+<main>
         <h1 class="title">¡Elige un juego!</h1>
         <div *ngIf="loading" class="loader">
             <div class="spinner"></div>
@@ -15,7 +13,7 @@
         <p *ngIf="!loading" class="record_count displayColumn">
             {{selectedGame[0].leaderboard.length === 0 ? 'No hay records disponibles.' : selectedGame[0].leaderboard.length + ' records encontrados.'}}
         </p>
-        <hr>
+        <hr class="displayColumn">
         <section class="displayColumn" *ngIf="game">
             <div id="leaderboard" class="leaderboard">
                 <table>
@@ -34,3 +32,4 @@
                 </table>
             </div>
         </section>
+</main>    

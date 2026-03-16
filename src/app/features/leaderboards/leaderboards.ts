@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
@@ -20,7 +20,7 @@ export class Leaderboards implements OnInit {
     selectedRecordId: string | null = null;
     games: string[] = [];
 
-    constructor(private RecordsService: RecordsService) { }
+    constructor(private RecordsService: RecordsService, private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.loadRecords();
@@ -35,12 +35,14 @@ export class Leaderboards implements OnInit {
                 console.log('Juegos únicos extraídos:', this.games);
                 this.record = data;
                 this.loading = false;
+                this.cdr.detectChanges();
             },
             error: (error) => {
                 console.error('Ocurrió un error:', error);
 
                 this.errormensaje = "Failed to load records: " + error.message;
                 this.loading = false;
+                this.cdr.detectChanges();
             }
         });
     }

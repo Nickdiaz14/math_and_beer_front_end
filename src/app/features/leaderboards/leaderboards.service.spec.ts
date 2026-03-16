@@ -1,5 +1,5 @@
 import { TestBed } from "@angular/core/testing";
-import { RecordsService } from "./home.service";
+import { RecordsService } from "./leaderboards.service";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 
 describe('Records Service', () => {
