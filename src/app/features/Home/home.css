@@ -1,0 +1,132 @@
+.about_text p {
+    text-align: justify;
+    line-height: 1.6;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: min(4vw, 18px);
+    max-width: 87%;
+    hyphens: auto;
+}
+
+.about_text h2 {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 200%;
+    margin-top: 4vh;
+    margin-bottom: 2vh;
+}
+
+.about_text ol {
+    color: white;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: min(4vw, 18px);
+    margin-bottom: 1vh;
+    max-width: 90%;
+    hyphens: auto;
+}
+
+.about-img {
+    --img-width: 90%;
+    width: var(--img-width);
+    margin: 0 calc((100% - var(--img-width))/2);
+}
+
+.img-max-w {
+    max-width: 100% !important;
+}
+
+.myBg {
+    background: var(--myBg) !important;
+}
+
+.yearBox {
+    background: rgba(255, 255, 255, 0.1) !important;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(400px, auto)) !important;
+    gap: 4vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.myCard {
+    max-width: 540px;
+    max-height: 300px;
+}
+
+.myCardBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.modalContent {
+    font-size: 15px !important;
+}
+
+.leftImg {
+    width: 30%;
+}
+
+.accordion {
+    width: 95%;
+    margin: 0 auto 5vh auto;
+}
+
+.myBorder {
+    border: 1px solid var(--myBorder) !important;
+    box-sizing: border-box;
+    padding: 1px;
+}
+
+.collapsed::after {
+    filter: invert(1);
+}
+
+.myPersonalInfo {
+    padding: 3%;
+    width: 85%;
+}
+
+.myImgWidth {
+    width: min(30vh, 38vw) !important;
+    height: min(30vh, 38vw) !important;
+    border-radius: 50%;
+}
+
+.fs-personal {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: normal !important;
+    font-size: 16px !important;
+    text-align: justify;
+}
+
+.m-left {
+    margin-left: 0rem !important;
+}
+
+.myWidth {
+    width: 84%;
+}
+
+@media (min-width: 1400px) {
+
+    .myPersonalInfo {
+        padding: 3%;
+        width: 85%;
+    }
+
+    .img-max-w {
+        max-width: 100% !important;
+        margin: 0;
+    }
+
+    .about-img {
+        width: 100%;
+        margin: 0;
+    }
+}

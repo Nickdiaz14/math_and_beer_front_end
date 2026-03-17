@@ -4,16 +4,16 @@
             <div class="spinner"></div>
             <span>Cargando rankings...</span>
         </div>
-        <div *ngIf="!loading" class="displayColumn">
+        <div *ngIf="!loading">
             <select [(ngModel)]="game" id="game" name="game" required (change)="filterRecords()" class="game_select">
                 <option value="" disabled selected>Selecciona un juego</option>
                 <option *ngFor="let game of games" [value]="game">{{game}}</option>
             </select> 
         </div>
-        <p *ngIf="!loading" class="record_count displayColumn">
+        <p *ngIf="!loading && selectedGame" class="record_count">
             {{selectedGame[0].leaderboard.length === 0 ? 'No hay records disponibles.' : selectedGame[0].leaderboard.length + ' records encontrados.'}}
         </p>
-        <hr class="displayColumn">
+        <hr>
         <section class="displayColumn" *ngIf="game">
             <div id="leaderboard" class="leaderboard">
                 <table>

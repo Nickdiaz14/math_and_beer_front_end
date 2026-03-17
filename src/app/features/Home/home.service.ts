@@ -13,6 +13,12 @@ export interface Event {
     city: string
 }
 
+export interface Planner {
+    person: string,
+    image: string,
+    description: string
+}
+
 @Injectable({
     providedIn: "root"
 })
@@ -23,7 +29,11 @@ export class HomeService {
     constructor(private http: HttpClient) { }
 
     getEvents(): Observable<Event[]> {
-        return this.http.get<Event[]>(`${this.url}/leaderboards`)
+        return this.http.get<Event[]>(`${this.url}/events`)
+    }
+
+    getPlanners(): Observable<Planner[]> {
+        return this.http.get<Planner[]>('assets/json/equipo.json');
     }
 
 }

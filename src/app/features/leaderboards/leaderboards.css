@@ -16,7 +16,7 @@
 }
 
 .leaderboard {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     background: rgba(50, 14, 67, 0.445);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -39,7 +39,7 @@
 }
 
 .leaderboard table {
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
     border-collapse: collapse;
 }

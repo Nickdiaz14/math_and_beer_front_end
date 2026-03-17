@@ -1,0 +1,105 @@
+.contact {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgb(50, 14, 67);
+    border: 1px solid rgba(155, 76, 228, 0.3);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.contact.active {
+    transform: rotate(180deg);
+    transition: all 0.3s ease;
+    background: #4a148c;
+}
+
+
+.menu-toggle {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    bottom: 23px;
+    right: 15px;
+    width: 50px;
+    height: 0px;
+    border-radius: 50%;
+    background: rgba(50, 14, 67, 0.397);
+    align-items: center;
+    justify-content: space-evenly;
+    transition: all 0.2s ease;
+}
+
+.menu-toggle.active {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    width: 50px;
+    height: 245px;
+    padding: 10px 0;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.instagram,
+.mail,
+.whatsapp {
+    position: relative;
+    transition: all 0.3s ease;
+    height: 0px;
+    background: rgba(50, 14, 67, 0.297);
+    font-size: 0px;
+    text-decoration: none;
+
+}
+
+.instagram.active {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 0px;
+    border-radius: 50%;
+    background: var(--background-instagram-color);
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 150%;
+}
+
+.mail.active {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 0px;
+    border-radius: 50%;
+    background: var(--background-mail-color);
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 120%;
+}
+
+.whatsapp.active {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 0px;
+    border-radius: 50%;
+    background: var(--background-whatsapp-color);
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 150%;
+}

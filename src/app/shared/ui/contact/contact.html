@@ -1,0 +1,9 @@
+<footer>
+    <div class="menu-toggle" [class.active]="isActive">
+        <a class="mail" [class.active]="isActive" href="mailto:mate.et.cerv@gmail.com?subject=Math and Beer en mi ciudad🍻&body=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre..." aria-label="Enviar correo"><i class="fa-solid fa-envelope"></i></a>
+        <a class="instagram" [class.active]="isActive" href="https://www.instagram.com/math_and_beer/#"><i class="fa-brands fa-instagram"></i></a>
+        <a class="whatsapp" [class.active]="isActive" href="https://wa.me/+573227217274"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+    
+    <button class="contact" [class.active]="isActive"><i class="fa-solid fa-chevron-up" (click)="toggleMenu()"></i></button>
+</footer>
