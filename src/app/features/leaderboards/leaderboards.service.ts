@@ -10,12 +10,6 @@ export interface gameRecord {
     string_record: string
 }
 
-export interface User {
-    _id: string;
-    username: string;
-    UUID_id: string
-}
-
 @Injectable({
     providedIn: "root"
 })
@@ -35,24 +29,5 @@ export class RecordsService {
 
     getLeaderboards(): Observable<gameRecord[]> {
         return this.http.get<gameRecord[]>(`${this.url}/leaderboards`)
-    }
-}
-
-@Injectable({
-    providedIn: "root"
-})
-
-export class UsersService {
-    private url = "https://mathandbeerjs-production.up.railway.app/api"
-
-    constructor(private http: HttpClient) { }
-
-    createUser(body: { username: string, UUID_id: string }): Observable<User> {
-        return this.http.post<User>(`${this.url}/create_user`, body)
-    }
-
-    getUser(uuid: string): Observable<User> {
-        console.log("Fetching user with ID:", uuid);
-        return this.http.get<User>(`${this.url}/get_user/${uuid}`)
     }
 }

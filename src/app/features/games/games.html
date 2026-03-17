@@ -1,0 +1,108 @@
+    <main *ngIf="username == ''">
+    <h1 class="title" style="margin-top: 20vh">¡Bienvenido a Math & Beer!</h1>
+    <h2 class="title fs-4">Ingresa un nombre o apodo</h2>
+    <h2 id = "case" class="fs-6" style="color: #ff0000;">{{ message }}</h2>
+    <input type="text" [(ngModel)]="nickname" required>
+    <button id="start" class="game" (click)="sendName()"><span class="title" style="font-size: 25px;">¡Jugar!</span></button>
+    </main>
+    <main *ngIf="username != ''">
+        <hr>
+        <h1 class="title">¡Hola, {{ username }}! <br> Elige un juego</h1>
+        <hr>
+        <div class="grid_container menu_games">
+            <button class="game" data-bs-toggle="modal" data-bs-target="#0h-h1-size">
+                <span class="game_text_out">¡Jugar!</span>
+                <img src="assets/games/0h-h1.png" alt="" class="game_img">
+                <span class="game_text">0h-h1</span>
+            </button>
+
+            <button class="game" onclick="window.location.href='/0h_h1_tt'">
+                <span class="game_text_out">¡Jugar!</span>
+                <img src="assets/games/time_trial.png" alt="" class="game_img">
+                <span class="game_text_big">Contrareloj<br>0h-h1</span>
+            </button>
+
+            <button class="game" onclick="window.location.href='/knight'">
+                <span class="game_text_out">¡Jugar!</span>
+                <img src="assets/games/knight.png" alt="" class="game_img">
+                <span class="game_text">Salto <br>Real</span>
+            </button>
+
+            <button class="game" data-bs-toggle="modal" data-bs-target="#secuenzo-size">
+                <span class="game_text_out">¡Jugar!</span>
+                <img src="assets/games/0h-h1.png" alt="" class="game_img">
+                <span class="game_text_big">Secuenzo</span>
+            </button>
+
+            <button class="game" data-bs-toggle="modal" data-bs-target="#cuentamania-size">
+                <span class="game_text_out">¡Jugar!</span>
+                <img src="assets/games/cuentamania.png" alt="" class="game_img">
+                <span class="game_text">Cuenta<br>Manía</span>
+            </button>
+        </div>
+
+        <!-- Modal 0h-h1 -->
+            <div class="modal fade" id="0h-h1-size" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content bg-dark text-light overflow-auto">
+                        <div class="modal-header displayColumn">Elige el tamaño del tablero</div>
+                        <div class="modal-body">
+                            <table class="displayColumn">
+                                <tr>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/0h_h1?n=4'">4x4</button></td>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/0h_h1?n=6'">6x6</button></td>
+                                </tr>
+                                <tr>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/0h_h1?n=8'">8x8</button></td>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/0h_h1?n=10'">10x10</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer myButtons">
+                            <button type="button" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal secuenzo -->
+            <div class="modal fade" id="secuenzo-size" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content bg-dark text-light overflow-auto">
+                        <div class="modal-header displayColumn">Elige un modo de juego</div>
+                        <div class="modal-body">
+                            <table class="displayColumn">
+                                <tr>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/secuenzo?n=6'">Unicolor</button></td>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/secuenzo?n=5'">Bicolor</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer myButtons">
+                            <button type="button" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Cuentamania -->
+            <div class="modal fade" id="cuentamania-size" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content bg-dark text-light overflow-auto">
+                        <div class="modal-header displayColumn">Elige el tamaño del tablero</div>
+                        <div class="modal-body">
+                            <table class="displayColumn">
+                                <tr>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/cuentamania?n=3'">S</button></td>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/cuentamania?n=4'">M</button></td>
+                                    <td><button class="btn btn-secondary btn-lg p-4 subGameBtn" onclick="window.location.href='/cuentamania?n=5'">L</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer myButtons">
+                            <button type="button" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
