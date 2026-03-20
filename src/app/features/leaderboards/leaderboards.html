@@ -1,17 +1,17 @@
 <main>
         <h1 class="title">¡Elige un juego!</h1>
-        <div *ngIf="loading" class="loader">
+        <div *ngIf="loading()" class="loader">
             <div class="spinner"></div>
             <span>Cargando rankings...</span>
         </div>
-        <div *ngIf="!loading">
+        <div *ngIf="!loading()">
             <select [(ngModel)]="game" id="game" name="game" required (change)="filterRecords()" class="game_select">
                 <option value="" disabled selected>Selecciona un juego</option>
-                <option *ngFor="let game of games" [value]="game">{{game}}</option>
+                <option *ngFor="let g of games()" [value]="g">{{g}}</option>
             </select> 
         </div>
-        <p *ngIf="!loading && selectedGame" class="record_count">
-            {{selectedGame[0].leaderboard.length === 0 ? 'No hay records disponibles.' : selectedGame[0].leaderboard.length + ' records encontrados.'}}
+        <p *ngIf="!loading() && selectedGame()" class="record_count">
+            {{selectedGame()[0].leaderboard.length === 0 ? 'No hay records disponibles.' : selectedGame()[0].leaderboard.length + ' records encontrados.'}}
         </p>
         <hr>
         <section class="displayColumn" *ngIf="game">
@@ -24,7 +24,7 @@
                             <th>Record</th>
                         </tr>
                     </thead>
-                    <tr *ngFor="let score of selectedGame[0].leaderboard.slice(0, 10)">
+                    <tr *ngFor="let score of selectedGame()[0].leaderboard.slice(0, 10)">
                         <td>{{score.position}}</td>
                         <td>{{score.username}}</td>
                         <td>{{score.record}}</td>

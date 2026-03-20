@@ -21,7 +21,6 @@ export class UsersService {
     }
 
     getUser(uuid: string): Observable<string> {
-        console.log("Fetching user with ID:", uuid);
         return this.http.get<string>(`${this.url}/get_user/${uuid}`)
     }
 }

@@ -1,53 +1,46 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
 import { RecordsService, gameRecord } from "./leaderboards.service";
 
 @Component({
     selector: "app-leaderboards",
-    imports: [CommonModule, FormsModule, HttpClientModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: "./leaderboards.html",
     styleUrl: "./leaderboards.css"
 })
-
 export class Leaderboards implements OnInit {
     game: string | null = null;
-    selectedGame: any = null;
-    record: gameRecord[] = [];
-    loading: boolean = false;
-    errormensaje: string = "";
+    selectedGame = signal<any>(null);
+    record = signal<gameRecord[]>([]);
+    loading = signal<boolean>(false);
+    errormensaje = signal<string>("");
     selectedRecordId: string | null = null;
-    games: string[] = [];
+    games = signal<string[]>([]);
 
-    constructor(private RecordsService: RecordsService, private cdr: ChangeDetectorRef) { }
+    private recordsService = inject(RecordsService);
 
     ngOnInit(): void {
         this.loadRecords();
     }
 
     loadRecords(): void {
-        this.loading = true;
-        this.RecordsService.getLeaderboards().subscribe({
+        this.loading.set(true);
+        this.recordsService.getLeaderboards().subscribe({
             next: (data: gameRecord[]) => {
-                this.games = Array.from(new Set(data.map(r => r.game)));
-                console.log('Datos recibidos de la API:', data);
-                console.log('Juegos únicos extraídos:', this.games);
-                this.record = data;
-                this.loading = false;
-                this.cdr.detectChanges();
+                this.games.set(Array.from(new Set(data.map(r => r.game))));
+                this.record.set(data);
+                this.loading.set(false);
             },
-            error: (error) => {
+            error: (error: Error) => {
                 console.error('Ocurrió un error:', error);
-
-                this.errormensaje = "Failed to load records: " + error.message;
-                this.loading = false;
-                this.cdr.detectChanges();
+                this.errormensaje.set("Failed to load records: " + error.message);
+                this.loading.set(false);
             }
         });
     }
 
     filterRecords(): void {
-        this.selectedGame = this.record.filter(r => r.game === this.game);
+        this.selectedGame.set(this.record().filter(r => r.game === this.game));
     }
 }

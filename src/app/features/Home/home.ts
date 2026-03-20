@@ -1,28 +1,28 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
 import { HomeService, Event, Planner } from "./home.service";
-import { SharedModule } from '../../shared/shared-module';
-import { DriveImgPipe } from '../../drive-img-pipe'
+import { RevealDirective } from '../../directives/reveal.directive';
+import { CounterDirective } from '../../directives/counter.directive';
+import { DriveImgPipe } from '../../drive-img-pipe';
 
 @Component({
     selector: "app-Home",
-    imports: [CommonModule, FormsModule, HttpClientModule, SharedModule, DriveImgPipe],
+    imports: [CommonModule, FormsModule, DriveImgPipe, RevealDirective, CounterDirective],
     templateUrl: "./home.html",
     styleUrl: "./home.css"
 })
-
 export class Home implements OnInit {
-    loading: boolean = false
-    errormensaje: string = "";
-    n_charlas: number = 0;
-    cities: number = 0;
-    years: number = 0;
-    events: { [year: number]: any[] } = {};
-    future_events: { [city: string]: any } = {};
-    planners: any = [];
-    constructor(private HomeService: HomeService, private cdr: ChangeDetectorRef) { }
+    loading = signal<boolean>(false);
+    errormensaje = signal<string>("");
+    n_charlas = signal<number>(0);
+    cities = signal<number>(0);
+    years = signal<number>(0);
+    events = signal<{ [year: number]: Event[] }>({});
+    future_events = signal<{ [city: string]: Event }>({});
+    planners = signal<any>([]);
+
+    private homeService = inject(HomeService);
 
     ngOnInit(): void {
         this.loadEvents();
@@ -30,63 +30,66 @@ export class Home implements OnInit {
     }
 
     loadEvents(): void {
-        this.loading = true;
-        this.HomeService.getEvents().subscribe({
+        this.loading.set(true);
+        this.homeService.getEvents().subscribe({
             next: (data: Event[]) => {
                 data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-                this.years = Array.from(new Set(data.map(r => new Date(r.date).getFullYear()))).length;
-                this.cities = Array.from(new Set(data.map(r => r.city))).length;
+                this.years.set(new Set(data.map(r => new Date(r.date).getFullYear())).size);
+                this.cities.set(new Set(data.map(r => r.city)).size);
+                
+                const eventsMap: { [year: number]: Event[] } = {};
+                const futureMap: { [city: string]: Event } = {};
+                let charlasCount = 0;
+
                 data.forEach(c => {
                     const hoy = new Date();
                     const eventDate = new Date(c.date);
                     const year = eventDate.getFullYear();
+                    
                     if (eventDate >= hoy) {
-                        this.future_events[c.city] = c;
+                        futureMap[c.city] = c;
                     } else {
-                        this.n_charlas++
-                        (this.events[year] ??= []).push(c);
+                        charlasCount++;
+                        if (!eventsMap[year]) eventsMap[year] = [];
+                        eventsMap[year].push(c);
                     }
                 });
-                Object.values(this.events).forEach(list => {
+                
+                Object.values(eventsMap).forEach(list => {
                     list.forEach(e => {
-                        e.summary = Object.values(JSON.parse(e.summary));
+                        if (typeof e.summary === 'string') {
+                            try {
+                                e.summary = Object.values(JSON.parse(e.summary));
+                            } catch (err) { }
+                        }
                     });
                 });
-                this.loading = false;
-                console.log('Datos recibidos de la API:', this.events, this.future_events);
-                this.cdr.detectChanges();
-
+                
+                this.n_charlas.set(charlasCount);
+                this.events.set(eventsMap);
+                this.future_events.set(futureMap);
+                this.loading.set(false);
             },
-            error: (error) => {
+            error: (error: Error) => {
                 console.error('Ocurrió un error:', error);
-
-                this.errormensaje = "Failed to load records: " + error.message;
-                this.loading = false;
-                this.cdr.detectChanges();
-
+                this.errormensaje.set("Failed to load records: " + error.message);
+                this.loading.set(false);
             }
         });
     }
 
     loadPlanners(): void {
-        this.loading = true;
-        this.HomeService.getPlanners().subscribe({
+        this.loading.set(true);
+        this.homeService.getPlanners().subscribe({
             next: (data: Planner[]) => {
-                this.planners = data
-                this.loading = false;
-                console.log('Datos recibidos de la API:', this.planners);
-                this.cdr.detectChanges();
-
+                this.planners.set(data);
+                this.loading.set(false);
             },
-            error: (error) => {
+            error: (error: Error) => {
                 console.error('Ocurrió un error:', error);
-
-                this.errormensaje = "Failed to load records: " + error.message;
-                this.loading = false;
-                this.cdr.detectChanges();
-
+                this.errormensaje.set("Failed to load records: " + error.message);
+                this.loading.set(false);
             }
-        })
+        });
     }
-
 }

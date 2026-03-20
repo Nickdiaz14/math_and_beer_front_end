@@ -6,7 +6,7 @@ export interface Event {
     date: Date;
     speaker: string;
     title: string;
-    summary: JSON,
+    summary: any;
     place: string,
     video: string,
     image: string,

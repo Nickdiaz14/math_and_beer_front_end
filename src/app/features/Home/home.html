@@ -80,15 +80,15 @@
             
             <div class="d-flex justify-content-around mt-4 small">
                 <div class="about_text displayColumn">
-                    <h2 appCounter class="subtitle fw-bold m-0 counter">{{ n_charlas }}</h2>
+                    <h2 appCounter class="subtitle fw-bold m-0 counter">{{ n_charlas() }}</h2>
                     <p>Charlas</p>
                 </div>
                 <div class="about_text displayColumn">
-                    <h2 appCounter class="subtitle fw-bold m-0 counter">{{ years }}</h2>
+                    <h2 appCounter class="subtitle fw-bold m-0 counter">{{ years() }}</h2>
                     <p>Años</p>
                 </div>
                 <div class="about_text displayColumn">
-                    <h2 appCounter class="subtitle fw-bold m-0 counter">{{ cities }}</h2>
+                    <h2 appCounter class="subtitle fw-bold m-0 counter">{{ cities() }}</h2>
                     <p>Ciudades</p>
                 </div>
             </div>
@@ -107,9 +107,8 @@
     <div class="about_text displayColumn">
         <p class="lh-lg small">En cada encuentro de <strong>Math & Beer</strong>, las matemáticas se convierten en historias que despiertan la curiosidad y el asombro. Nuestras charlas son el corazón del proyecto: espacios donde las ideas fluyen entre risas, preguntas y cervezas, y donde descubrimos que detrás de cada número hay una historia que vale la pena contar. Aquí encontrarás un recorrido por todas las ediciones que hemos realizado, con temas que van desde los clásicos teoremas hasta las conexiones más inesperadas entre el arte, la tecnología, la música y la vida cotidiana.</p>
     </div>
-    <!-- Acordeón -->
     <div class="accordion displayColumn" id="accordionExample">
-        <div *ngFor="let item of events | keyvalue" class="accordion-item myBorder myBg displayColumn">
+        <div *ngFor="let item of events() | keyvalue" class="accordion-item myBorder myBg displayColumn">
             <h2 class="accordion-header myBg w-100">
                 <button class="accordion-button collapsed myBg text-light"
                 type="button"
@@ -187,20 +186,20 @@
         <p>Detrás de cada charla, cada idea y cada cerveza compartida, hay un equipo que trabaja para que todo cobre sentido. Conoce al equipo que da vida a Math & Beer:</p>
         <div id="carouselExampleInterval" class="carousel slide mt-4 mb-4" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div *ngFor="let m of planners | keyvalue" class="carousel-item" [class.active]="m.key === '1' || m.key === 1" data-bs-interval="5000">
+                <div *ngFor="let m of planners()" class="carousel-item" [class.active]="m.person === 'Carlos Díez' || planners().indexOf(m) === 0" data-bs-interval="5000">
                     <div class="displayColumn">
                         <div class="card myBorder mb-3 myBg myPersonalInfo myWidth">
                             <div class="card-header">
-                                <h4 class="subtitle fs-4 mb-2">{{ m.value.person }}</h4>
+                                <h4 class="subtitle fs-4 mb-2">{{ m.person || m.value?.person }}</h4>
                             </div>
                             <div class="card-body mx-auto text-center">
                                 <div class="row">
                                     <div class="game-card mx-auto text-center col-xxl-4 align-self-center">
-                                        <img src="{{ m.value.image }}" class="rounded-circle mb-3 shadow" style="width: 200px; height: 200px; object-fit: cover; border: 3px solid var(--accent-beer);">
+                                        <img src="{{ m.image || m.value?.image }}" class="rounded-circle mb-3 shadow" style="width: 200px; height: 200px; object-fit: cover; border: 3px solid var(--accent-beer);">
                                     </div>
                                     <div class="game-card mx-auto text-center col-xxl-8 align-self-center">
                                         <div class="displayColumn">
-                                            <p class="lh-lg fs-6">{{ m.value.description }}</p>
+                                            <p class="lh-lg fs-6">{{ m.description || m.value?.description }}</p>
                                         </div>
                                     </div>
                                 </div>

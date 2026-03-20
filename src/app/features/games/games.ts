@@ -1,9 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { UsersService, User } from "./games.service";
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { UsersService, User } from "./games.service";
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-games',
@@ -12,12 +12,14 @@ import { Router } from '@angular/router';
   styleUrl: './games.css',
 })
 export class Games implements OnInit {
-  message: string = ""
-  uuid: string | null = ""
-  nickname: string = ""
-  username: string = ""
+  messageSig = signal<string>("");
+  uuid: string | null = "";
+  nickname: string = "";
+  username = signal<string>("");
 
-  constructor(private UsersService: UsersService, private cdr: ChangeDetectorRef, private router: Router) { }
+  private usersService = inject(UsersService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.asignUuid();
@@ -25,44 +27,39 @@ export class Games implements OnInit {
   }
 
   getUsername(): void {
-    this.UsersService.getUser(this.uuid || "").subscribe({
+    this.usersService.getUser(this.uuid || "").subscribe({
       next: (data: any) => {
-        console.log(data)
-        if (data) {
-          this.username = data.name
-          this.cdr.detectChanges()
+        if (data && data.name) {
+          this.username.set(data.name);
         } else {
-          this.username = ""
-          this.cdr.detectChanges()
+          this.username.set("");
         }
+      },
+      error: (error: Error) => {
+        console.error('Error:', error);
+        this.username.set("");
       }
-    })
+    });
   }
 
   asignUuid(): void {
-    this.uuid = localStorage.getItem("UserId");
-    if (!this.uuid) {
-      this.uuid = crypto.randomUUID(); // Método nativo de navegadores modernos
-      localStorage.setItem("UserId", this.uuid);
-    }
+    this.uuid = this.authService.getUuid();
   }
 
   sendName(): void {
-    console.log(this.nickname, this.uuid)
-    this.UsersService.createUser({ username: this.nickname, UUID_id: this.uuid || "" }).subscribe({
+    this.usersService.createUser({ username: this.nickname, UUID_id: this.uuid || "" }).subscribe({
       next: (data: User) => {
         if (data.created) {
-          console.log(data)
           this.getUsername();
-          this.cdr.detectChanges();
         } else {
-          console.log(data)
-          this.message = data.observation
-          this.nickname = ""
-          this.cdr.detectChanges();
+          this.messageSig.set(data.observation);
+          this.nickname = "";
         }
+      },
+      error: (error: Error) => {
+          console.error('Error:', error);
       }
-    })
+    });
   }
 
   private navegarAHome(id: string): void {
